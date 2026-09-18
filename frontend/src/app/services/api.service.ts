@@ -15,12 +15,14 @@ import type {
   Fixture,
 } from '../interfaces/tables';
 
+declare const APP_API_URL: string;
+
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://127.0.0.1:8000';
+  private readonly apiUrl = APP_API_URL;
   private readonly teamCache = new Map<number, Observable<Team>>();
 
   getTeams(): Observable<Team[]> {
