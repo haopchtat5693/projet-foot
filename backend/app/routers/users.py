@@ -15,12 +15,12 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return user_service.create_new_user(db, user)
 
 
-@router.get("/me", response_model=schemas.User)
+@router.get("/me/", response_model=schemas.User)
 def get_me(current_user: schemas.User = Depends(get_current_user)):
     return current_user
 
 
-@router.get("/{user_id}", response_model=schemas.User)
+@router.get("/{user_id}/", response_model=schemas.User)
 def get_user(user_id: int, db: Session = Depends(get_db)):
     user = crud.user_crud.get_user(db, user_id)
     if not user:
@@ -36,7 +36,7 @@ def get_users(
     return user_service.get_users(db)
 
 
-@router.put("/{user_id}", response_model=schemas.User)
+@router.put("/{user_id}/", response_model=schemas.User)
 def update_user(
     user_id: int,
     user_in: schemas.UserUpdate,

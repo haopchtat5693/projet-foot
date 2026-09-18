@@ -18,7 +18,7 @@ def create_player(
     return crud.player_crud.create_player(db, player)
 
 
-@router.get("/search", response_model=list[schemas.Player])
+@router.get("/search/", response_model=list[schemas.Player])
 async def search_players(
     name: str = Query(..., min_length=1),
     db: Session = Depends(get_db),
@@ -29,7 +29,7 @@ async def search_players(
     )
 
 
-@router.get("/{player_id}", response_model=schemas.Player)
+@router.get("/{player_id}/", response_model=schemas.Player)
 def get_player(player_id: int, db: Session = Depends(get_db)):
     player = crud.player_crud.get_player(db, player_id)
     if not player:
@@ -42,7 +42,7 @@ def get_players(db: Session = Depends(get_db)):
     return crud.player_crud.get_players(db)
 
 
-@router.put("/{player_id}", response_model=schemas.Player)
+@router.put("/{player_id}/", response_model=schemas.Player)
 def update_player(
     player_id: int, 
     player_in: schemas.PlayerUpdate, 
@@ -55,7 +55,7 @@ def update_player(
     return crud.player_crud.update_player(db, player_id, player_in)
 
 
-@router.delete("/{player_id}", response_model=schemas.Player)
+@router.delete("/{player_id}/", response_model=schemas.Player)
 def delete_player(
     player_id: int, 
     db: Session = Depends(get_db),

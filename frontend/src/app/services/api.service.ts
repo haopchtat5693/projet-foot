@@ -26,14 +26,14 @@ export class ApiService {
   private readonly teamCache = new Map<number, Observable<Team>>();
 
   getTeams(): Observable<Team[]> {
-    return this.http.get<Team[]>(`${this.apiUrl}/teams`);
+    return this.http.get<Team[]>(`${this.apiUrl}/teams/`);
   }
 
   getTeamById(teamId: number): Observable<Team> {
     if (!this.teamCache.has(teamId)) {
       this.teamCache.set(
         teamId,
-        this.http.get<Team>(`${this.apiUrl}/teams/${teamId}`).pipe(shareReplay(1))
+        this.http.get<Team>(`${this.apiUrl}/teams/${teamId}/`).pipe(shareReplay(1))
       );
     }
     return this.teamCache.get(teamId)!;
@@ -42,27 +42,27 @@ export class ApiService {
   searchTeamsByName(name: string): Observable<Team[]> {
     const params = new URLSearchParams({ name });
 
-    return this.http.get<Team[]>(`${this.apiUrl}/teams/search?${params.toString()}`);
+    return this.http.get<Team[]>(`${this.apiUrl}/teams/search/?${params.toString()}`);
   }
 
   getSeasons(): Observable<Season[]> {
-    return this.http.get<Season[]>(`${this.apiUrl}/seasons`);
+    return this.http.get<Season[]>(`${this.apiUrl}/seasons/`);
   }
 
   getStadiums(): Observable<Stadium[]> {
-    return this.http.get<Stadium[]>(`${this.apiUrl}/stadiums`);
+    return this.http.get<Stadium[]>(`${this.apiUrl}/stadiums/`);
   }
 
   getStadiumById(stadiumId: number): Observable<Stadium> {
-    return this.http.get<Stadium>(`${this.apiUrl}/stadiums/${stadiumId}`);
+    return this.http.get<Stadium>(`${this.apiUrl}/stadiums/${stadiumId}/`);
   }
 
   getLeagues(): Observable<League[]> {
-    return this.http.get<League[]>(`${this.apiUrl}/leagues`);
+    return this.http.get<League[]>(`${this.apiUrl}/leagues/`);
   }
 
   getLeagueById(leagueId: number): Observable<League> {
-    return this.http.get<League>(`${this.apiUrl}/leagues/${leagueId}`);
+    return this.http.get<League>(`${this.apiUrl}/leagues/${leagueId}/`);
   }
 
   searchLeaguesByName(name: string): Observable<League[]> {
@@ -83,25 +83,25 @@ export class ApiService {
     const queryString = params.toString();
     const suffix = queryString ? `?${queryString}` : '';
 
-    return this.http.get<League[]>(`${this.apiUrl}/leagues/lookup${suffix}`);
+    return this.http.get<League[]>(`${this.apiUrl}/leagues/lookup/${suffix}`);
   }
 
   getTeamPlayersForSeason(teamId: number, seasonId: number): Observable<Player[]> {
-    return this.http.get<Player[]>(`${this.apiUrl}/teams/${teamId}/seasons/${seasonId}/players`);
+    return this.http.get<Player[]>(`${this.apiUrl}/teams/${teamId}/seasons/${seasonId}/players/`);
   }
 
   getTeamSeasonStats(teamId: number, leagueId: number, seasonId: number): Observable<TeamSeasonStats> {
     return this.http.get<TeamSeasonStats>(
-      `${this.apiUrl}/stats/team/${teamId}/league/${leagueId}/season/${seasonId}`,
+      `${this.apiUrl}/stats/team/${teamId}/league/${leagueId}/season/${seasonId}/`,
     );
   }
 
   getPlayers(): Observable<Player[]> {
-    return this.http.get<Player[]>(`${this.apiUrl}/players`);
+    return this.http.get<Player[]>(`${this.apiUrl}/players/`);
   }
 
   getPlayerById(playerId: number): Observable<Player> {
-    return this.http.get<Player>(`${this.apiUrl}/players/${playerId}`);
+    return this.http.get<Player>(`${this.apiUrl}/players/${playerId}/`);
   }
 
   searchPlayersByName(
@@ -109,49 +109,49 @@ export class ApiService {
   ): Observable<Player[]> {
     const params = new URLSearchParams({ name });
 
-    return this.http.get<Player[]>(`${this.apiUrl}/players/search?${params.toString()}`);
+    return this.http.get<Player[]>(`${this.apiUrl}/players/search/?${params.toString()}`);
   }
 
   getPlayerSeasonStats(playerId: number, seasonId: number): Observable<PlayerSeasonStats> {
-    return this.http.get<PlayerSeasonStats>(`${this.apiUrl}/stats/player/${playerId}/season/${seasonId}`);
+    return this.http.get<PlayerSeasonStats>(`${this.apiUrl}/stats/player/${playerId}/season/${seasonId}/`);
   }
 
   getCoaches(): Observable<Coach[]> {
-    return this.http.get<Coach[]>(`${this.apiUrl}/coaches`);
+    return this.http.get<Coach[]>(`${this.apiUrl}/coaches/`);
   }
 
   getCoachById(coachId: number): Observable<Coach> {
-    return this.http.get<Coach>(`${this.apiUrl}/coaches/${coachId}`);
+    return this.http.get<Coach>(`${this.apiUrl}/coaches/${coachId}/`);
   }
 
   searchCoachesByName(name: string): Observable<Coach[]> {
     const params = new URLSearchParams({ name });
 
-    return this.http.get<Coach[]>(`${this.apiUrl}/coaches/search?${params.toString()}`);
+    return this.http.get<Coach[]>(`${this.apiUrl}/coaches/search/?${params.toString()}`);
   }
 
   getFixtures(): Observable<Fixture[]> {
-    return this.http.get<Fixture[]>(`${this.apiUrl}/fixtures`);
+    return this.http.get<Fixture[]>(`${this.apiUrl}/fixtures/`);
   }
 
   getFixtureById(fixtureId: number): Observable<Fixture> {
-    return this.http.get<Fixture>(`${this.apiUrl}/fixtures/${fixtureId}`);
+    return this.http.get<Fixture>(`${this.apiUrl}/fixtures/${fixtureId}/`);
   }
 
   getFixtureStatistics(fixtureId: number): Observable<Record<string, unknown>> {
-    return this.http.get<Record<string, unknown>>(`${this.apiUrl}/fixtures/${fixtureId}/statistics`);
+    return this.http.get<Record<string, unknown>>(`${this.apiUrl}/fixtures/${fixtureId}/statistics/`);
   }
 
   getFixturesByLeague(leagueId: number, seasonId: number): Observable<Fixture[]> {
     const params = new URLSearchParams({ league_id: String(leagueId), season_id: String(seasonId) });
-    const url = `${this.apiUrl}/fixtures?${params.toString()}`;
+    const url = `${this.apiUrl}/fixtures/?${params.toString()}`;
     console.log('[ApiService] GET fixtures by league:', url);
     return this.http.get<Fixture[]>(url);
   }
 
   getFixturesByTeam(teamId: number): Observable<Fixture[]> {
     const params = new URLSearchParams({ team_id: String(teamId) });
-    return this.http.get<Fixture[]>(`${this.apiUrl}/fixtures?${params.toString()}`);
+    return this.http.get<Fixture[]>(`${this.apiUrl}/fixtures/?${params.toString()}`);
   }
 
   getFixturesByTeamAndSeason(teamId: number, seasonId: number, leagueId?: number): Observable<Fixture[]> {
@@ -159,7 +159,7 @@ export class ApiService {
     if (leagueId) {
       params.append('league_id', String(leagueId));
     }
-    const url = `${this.apiUrl}/fixtures?${params.toString()}`;
+    const url = `${this.apiUrl}/fixtures/?${params.toString()}`;
     console.log('[ApiService] GET fixtures by team and season:', { teamId, seasonId, leagueId, url });
     return this.http.get<Fixture[]>(url).pipe(
       tap((fixtures) => {
@@ -173,6 +173,6 @@ export class ApiService {
 
   getFixturesByDate(date: string): Observable<Fixture[]> {
     const params = new URLSearchParams({ date });
-    return this.http.get<Fixture[]>(`${this.apiUrl}/fixtures?${params.toString()}`);
+    return this.http.get<Fixture[]>(`${this.apiUrl}/fixtures/?${params.toString()}`);
   }
 }

@@ -27,7 +27,7 @@ export class AuthService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-    return this.http.post<TokenResponse>(`${this.apiUrl}/login`, body.toString(), { headers }).pipe(
+    return this.http.post<TokenResponse>(`${this.apiUrl}/login/`, body.toString(), { headers }).pipe(
       tap((response) => {
         this.tokenState.set(response.access_token);
         window.localStorage.setItem(TOKEN_KEY, response.access_token);
@@ -56,7 +56,7 @@ export class AuthService {
       'Authorization': `Bearer ${currentToken}`,
     });
 
-    return this.http.post<unknown>(`${this.apiUrl}/logout`, {}, { headers });
+    return this.http.post<unknown>(`${this.apiUrl}/logout/`, {}, { headers });
   }
 
   private readToken(): string | null {

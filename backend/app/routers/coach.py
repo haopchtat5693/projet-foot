@@ -22,7 +22,7 @@ def create_coach(
     return crud.coach_crud.create_coach(db, coach)
 
 
-@router.get("/search", response_model=list[schemas.Coach])
+@router.get("/search/", response_model=list[schemas.Coach])
 async def search_coaches(
     name: str = Query(..., min_length=1),
     db: Session = Depends(get_db),
@@ -30,7 +30,7 @@ async def search_coaches(
     return await search_coaches_by_name(db, name=name)
 
 
-@router.get("/team/{team_id}", response_model=list[schemas.Coach])
+@router.get("/team/{team_id}/", response_model=list[schemas.Coach])
 async def get_coaches_by_team(team_id: int, db: Session = Depends(get_db)):
     try:
         coaches = await sync_and_save_coaches_by_team(db, team_id=team_id)
@@ -50,7 +50,7 @@ async def get_coaches_by_team(team_id: int, db: Session = Depends(get_db)):
     return coaches
 
 
-@router.get("/{coach_id}", response_model=schemas.Coach)
+@router.get("/{coach_id}/", response_model=schemas.Coach)
 async def get_coach(coach_id: int, db: Session = Depends(get_db)):
     try:
         coach = await sync_and_save_coach(db, coach_id=coach_id)
@@ -83,7 +83,7 @@ async def get_coaches(
     return crud.coach_crud.get_coaches(db)
 
 
-@router.put("/{coach_id}", response_model=schemas.Coach)
+@router.put("/{coach_id}/", response_model=schemas.Coach)
 def update_coach(
     coach_id: int, 
     coach_in: schemas.CoachUpdate, 
@@ -96,7 +96,7 @@ def update_coach(
     return crud.coach_crud.update_coach(db, coach_id, coach_in)
 
 
-@router.delete("/{coach_id}", response_model=schemas.Coach)
+@router.delete("/{coach_id}/", response_model=schemas.Coach)
 def delete_coach(
     coach_id: int, 
     db: Session = Depends(get_db),

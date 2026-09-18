@@ -17,7 +17,7 @@ def create_stadium(
     return crud.stadium.create_stadium(db, stadium)
 
 
-@router.get("/{stadium_id}", response_model=schemas.Stadium)
+@router.get("/{stadium_id}/", response_model=schemas.Stadium)
 def get_stadium(stadium_id: int, db: Session = Depends(get_db)):
     stadium = crud.stadium_crud.get_stadium(db, stadium_id)
     if not stadium:
@@ -30,7 +30,7 @@ def get_stadiums(db: Session = Depends(get_db)):
     return crud.stadium_crud.get_stadiums(db)
 
 
-@router.put("/{stadium_id}", response_model=schemas.Stadium)
+@router.put("/{stadium_id}/", response_model=schemas.Stadium)
 def update_stadium(
     stadium_id: int, 
     stadium_in: schemas.StadiumUpdate, 
@@ -43,7 +43,7 @@ def update_stadium(
     return crud.stadium_crud.update_stadium(db, stadium_id, stadium_in)
 
 
-@router.delete("/{stadium_id}", response_model=schemas.Stadium)
+@router.delete("/{stadium_id}/", response_model=schemas.Stadium)
 def delete_stadium(
     stadium_id: int, 
     db: Session = Depends(get_db),

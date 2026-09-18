@@ -23,7 +23,7 @@ def create_fixture(
     return crud.fixture_crud.create_fixture(db, fixture)
 
 
-@router.get("/{fixture_id}", response_model=schemas.Fixture)
+@router.get("/{fixture_id}/", response_model=schemas.Fixture)
 async def get_fixture(fixture_id: int, db: Session = Depends(get_db)):
     print(f"[ROUTER] GET /fixtures/{fixture_id}")
     
@@ -52,7 +52,7 @@ async def get_fixture(fixture_id: int, db: Session = Depends(get_db)):
     return fixture
 
 
-@router.get("/{fixture_id}/statistics", response_model=dict)
+@router.get("/{fixture_id}/statistics/", response_model=dict)
 async def get_fixture_statistics(fixture_id: int, db: Session = Depends(get_db)):
     try:
         fixture = await sync_fixture_statistics(db, fixture_id)
@@ -120,7 +120,7 @@ async def get_fixtures(
     return crud.fixture_crud.get_fixtures(db, skip, limit)
 
 
-@router.put("/{fixture_id}", response_model=schemas.Fixture)
+@router.put("/{fixture_id}/", response_model=schemas.Fixture)
 def update_fixture(
     fixture_id: int, 
     fixture_in: schemas.FixtureUpdate, 
@@ -133,7 +133,7 @@ def update_fixture(
     return crud.fixture_crud.update_fixture(db, fixture_id, fixture_in)
 
 
-@router.delete("/{fixture_id}", response_model=schemas.Fixture)
+@router.delete("/{fixture_id}/", response_model=schemas.Fixture)
 def delete_fixture(
     fixture_id: int, 
     db: Session = Depends(get_db),

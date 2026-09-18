@@ -12,7 +12,7 @@ from app.models import User, Token
 router = APIRouter(tags=["Auth"])
 
 
-@router.post("/login")
+@router.post("/login/")
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
@@ -45,7 +45,7 @@ def login(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post("/logout")
+@router.post("/logout/")
 def logout(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),

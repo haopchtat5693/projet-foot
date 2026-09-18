@@ -9,7 +9,7 @@ from app.services.league_service import lookup_leagues as lookup_leagues_service
 router = APIRouter(prefix="/leagues", tags=["Leagues"])
 
 
-@router.get("/lookup")
+@router.get("/lookup/")
 async def lookup_leagues_route(
     db: Session = Depends(get_db),
     league_id: int | None = Query(None, alias="id"),
@@ -37,7 +37,7 @@ def create_league(
     return crud.league_crud.create_league(db, league)
 
 
-@router.get("/{league_id}", response_model=schemas.League)
+@router.get("/{league_id}/", response_model=schemas.League)
 def get_league(league_id: int, db: Session = Depends(get_db)):
     league = crud.league_crud.get_league(db, league_id)
     if not league:
@@ -50,7 +50,7 @@ def get_leagues(db: Session = Depends(get_db)):
     return crud.league_crud.get_leagues(db)
 
 
-@router.put("/{league_id}", response_model=schemas.League)
+@router.put("/{league_id}/", response_model=schemas.League)
 def update_league(
     league_id: int, 
     league_in: schemas.LeagueUpdate, 
@@ -63,7 +63,7 @@ def update_league(
     return crud.league_crud.update_league(db, league_id, league_in)
 
 
-@router.delete("/{league_id}", response_model=schemas.League)
+@router.delete("/{league_id}/", response_model=schemas.League)
 def delete_league(
     league_id: int, 
     db: Session = Depends(get_db),

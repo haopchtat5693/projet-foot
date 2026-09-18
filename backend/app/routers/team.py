@@ -20,7 +20,7 @@ def create_team(
     return crud.team_crud.create_team(db, team)
 
 
-@router.get("/search", response_model=list[schemas.Team])
+@router.get("/search/", response_model=list[schemas.Team])
 async def search_teams(
     name: str = Query(..., min_length=1),
     db: Session = Depends(get_db),
@@ -28,7 +28,7 @@ async def search_teams(
     return await search_teams_by_name(db, name=name)
 
 
-@router.get("/{team_id}", response_model=schemas.Team)
+@router.get("/{team_id}/", response_model=schemas.Team)
 async def get_team(team_id: int, db: Session = Depends(get_db)):
     try:
         team = await sync_and_save_team(db, team_id=team_id)
@@ -49,7 +49,7 @@ async def get_team(team_id: int, db: Session = Depends(get_db)):
 
 
 @router.get(
-    "/{team_id}/seasons/{season_id}/players", response_model=list[schemas.Player]
+    "/{team_id}/seasons/{season_id}/players/", response_model=list[schemas.Player]
 )
 async def get_team_players_for_season(
     team_id: int,
@@ -83,7 +83,7 @@ def get_teams(db: Session = Depends(get_db)):
     return crud.team_crud.get_teams(db)
 
 
-@router.put("/{team_id}", response_model=schemas.Team)
+@router.put("/{team_id}/", response_model=schemas.Team)
 def update_team(
     team_id: int, 
     team_in: schemas.TeamUpdate, 
@@ -96,7 +96,7 @@ def update_team(
     return crud.team_crud.update_team(db, team_id, team_in)
 
 
-@router.delete("/{team_id}", response_model=schemas.Team)
+@router.delete("/{team_id}/", response_model=schemas.Team)
 def delete_team(
     team_id: int, 
     db: Session = Depends(get_db),

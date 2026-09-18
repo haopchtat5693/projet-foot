@@ -17,7 +17,7 @@ def create_season(
     return crud.season_crud.create_season(db, season)
 
 
-@router.get("/{season_id}", response_model=schemas.Season)
+@router.get("/{season_id}/", response_model=schemas.Season)
 def get_season(season_id: int, db: Session = Depends(get_db)):
     season = crud.season_crud.get_season(db, season_id)
     if not season:
@@ -30,7 +30,7 @@ def get_seasons(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.season_crud.get_seasons(db, skip=skip, limit=limit)
 
 
-@router.put("/{season_id}", response_model=schemas.Season)
+@router.put("/{season_id}/", response_model=schemas.Season)
 def update_season(
     season_id: int, 
     season_in: schemas.SeasonUpdate, 
@@ -43,7 +43,7 @@ def update_season(
     return crud.season_crud.update_season(db, season_id, season_in)
 
 
-@router.delete("/{season_id}", response_model=schemas.Season)
+@router.delete("/{season_id}/", response_model=schemas.Season)
 def delete_season(
     season_id: int, 
     db: Session = Depends(get_db),

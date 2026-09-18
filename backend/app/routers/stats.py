@@ -12,7 +12,7 @@ router = APIRouter(prefix="/stats", tags=["Stats"])
 
 
 @router.get(
-    "/player/{player_id}/season/{season_id}", response_model=schemas.PlayerSeasonStats
+    "/player/{player_id}/season/{season_id}/", response_model=schemas.PlayerSeasonStats
 )
 async def get_player_stats_for_season(
     player_id: int, season_id: int, db: Session = Depends(get_db)
@@ -42,7 +42,7 @@ async def get_player_stats_for_season(
 
 
 @router.get(
-    "/team/{team_id}/league/{league_id}/season/{season_id}",
+    "/team/{team_id}/league/{league_id}/season/{season_id}/",
     response_model=schemas.TeamSeasonStats,
 )
 async def get_team_stats_for_team_league_season(
