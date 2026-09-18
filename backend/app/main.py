@@ -15,7 +15,7 @@ from app.routers import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="FootballStats API")
+app = FastAPI(title="FootballStats API", redirect_slashes=False)
 
 app.add_middleware(
     CORSMiddleware,
