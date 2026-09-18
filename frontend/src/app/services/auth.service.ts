@@ -4,13 +4,14 @@ import { Observable, tap, of } from 'rxjs';
 import { TokenResponse } from '../interfaces/token';
 
 const TOKEN_KEY = 'projet-foot.auth-token';
+declare const APP_API_URL: string;
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://127.0.0.1:8000';
+  private readonly apiUrl = APP_API_URL;
 
   private readonly tokenState = signal<string | null>(this.readToken());
 
