@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app import crud
-from app.services.football_api_client import fetch_from_api
+from app.services.football_api_client import API_KEY, fetch_from_api
 
 
 def map_player_api_data_to_payload(player_raw: dict, stats_block: dict | None = None):
@@ -44,7 +44,9 @@ async def search_players_by_name(
 
     local_players = crud.player_crud.get_players_by_name(db, search_term, limit=limit)
     
+    print(f"[DEBUG] Appel API avec le terme : {search_term} et la clé présente : {bool(API_KEY)}")
     data = await fetch_from_api("/players/profiles", {"search": search_term})
+    print(f"[DEBUG] Réponse brute de l'API : {data}")
     response = data.get("response") if data else []
     
     saved_ids = {p.id for p in local_players}
